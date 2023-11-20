@@ -44,7 +44,7 @@ services:
     restart: unless-stopped
     env_file: .env
     volumes:
-      - ./observability/grafana:/etc/grafana/provisioning/datasources
+      - ./observability/grafana/datasources:/etc/grafana/provisioning/datasources
 
 volumes:
   postgres_data:

@@ -165,16 +165,6 @@ runs:
       run: |
         echo "Copying Observability Data"
 
-        echo "DEBUGGING"
-        echo "    GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-        ls -la $GITHUB_WORKSPACE
-        ls -la $GITHUB_WORKSPACE/${{ inputs.grafana_datasource_dir }}
-
-
-        echo "    GITHUB_ACTION_PATH: $GITHUB_ACTION_PATH"
-        ls -la $GITHUB_ACTION_PATH
-        ls -la $GITHUB_ACTION_PATH/observability
-
         echo "    Grafana Datasource - from ${{ inputs.grafana_datasource_dir }} to $GITHUB_ACTION_PATH/observability/grafana/datasources"
         mkdir -p $GITHUB_ACTION_PATH/observability/grafana/datasources
         cp $GITHUB_WORKSPACE/${{ inputs.grafana_datasource_dir }}/* "${GITHUB_ACTION_PATH}/observability/grafana/datasources"
@@ -191,7 +181,6 @@ runs:
         checkout: false
         gh_action_repo: ${{ github.action_path }}
         gh_action_input_ansible: operations/deployment/ansible
-        bitops_extra_env_vars_file: extra_env
         ansible_skip : ${{ inputs.infrastructure_only }}
         env_ghs: ${{ inputs.env_ghs }}
 

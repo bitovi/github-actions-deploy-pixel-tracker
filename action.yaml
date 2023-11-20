@@ -53,6 +53,10 @@ inputs:
     description: 'Set to true to provision infrastructure (with Terraform) but skip the app deployment (with ansible)'
     default: "false"
     required: false
+  env_ghs:
+    description: 'Set to true to include a Github Secrets (.env formatted) in the environment variables'
+    default: ""
+    required: false
 
   # pixel tracker configuration
   grafana_datasource_dir:
@@ -175,6 +179,7 @@ runs:
         gh_action_input_ansible: operations/deployment/ansible
         bitops_extra_env_vars_file: extra_env
         ansible_skip : ${{ inputs.infrastructure_only }}
+        env_ghs: ${{ inputs.env_ghs }}
 
         # pixel tracker configuration
         grafana_datasource_dir: ${{ inputs.grafana_datasource_dir }}

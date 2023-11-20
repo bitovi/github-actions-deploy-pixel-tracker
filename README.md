@@ -2,7 +2,22 @@
 Simple pixel tracker app deployed to AWS EC2
 
 # Table of Contents
-
+- [Usage](#usage)
+  - [Quick start](#quick-start)
+  - [Configure Observability](#configure-observability)
+- [Usage (local)](#usage-local)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+  - [Getting Started](#getting-started)
+  - [Environment](#environment)
+    - [api-secret](#api-secret)
+  - [Endpoints](#endpoints)
+    - [/](#)
+    - [/pixel/:id](#pixelid)
+    - [/stats](#stats)
+    - [/stats/:id](#statsid)
+    - [/new-tracker](#new-tracker)
+    - [/delete-tracker](#delete-tracker)
 
 
 # Overview
@@ -29,7 +44,7 @@ jobs:
     # Bitovi's Deploy Pixel Tracker
     - id: deploy
       name: Deploy
-      uses: bitovi/github-actions-deploy-pixel-tracker@main
+      uses: bitovi/github-actions-deploy-pixel-tracker@0.1.0
       with:
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID_SANDBOX}}
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY_SANDBOX}}

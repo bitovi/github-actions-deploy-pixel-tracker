@@ -1,0 +1,21 @@
+{
+  "name": "pixel-tracker",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A simple JavaScript pixel tracker",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start-watch": "nodemon --legacy-watch index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "nanoid": "^3.1.12",
+    "dotenv": "^8.2.0",
+    "pg": "^8.11.3",
+    "body-parser": "^1.19.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

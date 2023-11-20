@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Tracker Test</title>
+    <script>
+        // Function to extract query parameters from the URL
+        function getQueryParam(param) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Function to set the pixel ID
+        function setPixelId() {
+            var pixelId = getQueryParam('pixel_id');
+            if (pixelId) {
+                document.getElementById('trackingPixel').src = "http://localhost:8000/pixel/" + pixelId;
+            }
+        }
+    </script>
+</head>
+<body onload="setPixelId()">
+    <h1>Pixel Tracker Test Page</h1>
+    <p>This page is for testing the pixel tracker.</p>
+    <!-- Tracking Pixel -->
+    <img id="trackingPixel" alt="Tracking Pixel" style="width:1px; height:1px;">
+</body>
+</html>

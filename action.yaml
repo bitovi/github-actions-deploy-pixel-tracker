@@ -161,12 +161,22 @@ runs:
       run: |
         echo "Copying Observability Data"
 
-        echo "    Grafana Datasource - from ${{ inputs.grafana_datasource_dir }} to $GITHUB_ACTION_PATH:/observability/grafana/datasources"
-        mkdir -p $GITHUB_ACTION_PATH:/observability/grafana/datasources
+        echo "DEBUGGING"
+        echo "    GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+        ls -la $GITHUB_WORKSPACE
+        ls -la $GITHUB_WORKSPACE/${{ inputs.grafana_datasource_dir }}
+
+
+        echo "    GITHUB_ACTION_PATH: $GITHUB_ACTION_PATH"
+        ls -la $GITHUB_ACTION_PATH
+        ls -la $GITHUB_ACTION_PATH/observability
+        
+        echo "    Grafana Datasource - from ${{ inputs.grafana_datasource_dir }} to $GITHUB_ACTION_PATH/observability/grafana/datasources"
+        mkdir -p $GITHUB_ACTION_PATH/observability/grafana/datasources
         cp $GITHUB_WORKSPACE/${{ inputs.grafana_datasource_dir }}/* "${GITHUB_ACTION_PATH}/observability/grafana/datasources"
 
-        echo "    Prometheus Config - from ${{ inputs.prometheus_config }} to $GITHUB_ACTION_PATH:/observability/prometheus"
-        mkdir -p $GITHUB_ACTION_PATH:/observability/prometheus
+        echo "    Prometheus Config - from ${{ inputs.prometheus_config }} to $GITHUB_ACTION_PATH/observability/prometheus"
+        mkdir -p $GITHUB_ACTION_PATH/observability/prometheus
         cp $GITHUB_WORKSPACE/${{ inputs.prometheus_config }} "${GITHUB_ACTION_PATH}/observability/prometheus"
 
     - name: Deploy with BitOps

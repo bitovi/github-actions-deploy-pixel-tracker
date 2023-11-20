@@ -2,32 +2,82 @@
 Simple pixel tracker app deployed to AWS EC2
 
 # Table of Contents
-- [Overview](#overview)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Environment](#environment)
-  - [api-secret](#api-secret)
-- [Endpoints](#endpoints)
-    - [/](#)
-    - [/pixel/:id](#pixelid)
-    - [/stats](#stats)
-    - [/stats/:id](#statsid)
-    - [/new-tracker](#new-tracker)
-    - [/delete-tracker](#delete-tracker)
+
 
 
 # Overview
-Simple node pixel tracker app with deployment wrapped in a GitHub Action.
+Simple node pixel tracker app with deployment wrapped in a GitHub Action to deploy to AWS EC2.
 
 
-# Requirements
+
+# Usage
+
+## Quick start
+```yml
+name: Deploy Pixel Tracker Sandbox
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/deploy-sandbox.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    # Bitovi's Deploy Pixel Tracker
+    - id: deploy
+      name: Deploy
+      uses: bitovi/github-actions-deploy-pixel-tracker@main
+      with:
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID_SANDBOX}}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY_SANDBOX}}
+```
+
+## Configure Observability
+```yml
+name: Deploy Pixel Tracker Sandbox
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/deploy-sandbox.yml'
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.ref_name }}
+      url: ${{ steps.deploy.outputs.lb_url }}
+
+    steps:
+    # Bitovi's Deploy Pixel Tracker
+    - id: deploy
+      name: Deploy
+      uses: bitovi/github-actions-deploy-pixel-tracker@0.1.0
+      with:
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID_SANDBOX}}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY_SANDBOX}}
+        aws_ec2_instance_type: t2.small
+        aws_default_region: us-east-1
+        grafana_datasource_dir: observability/grafana/datasources
+        prometheus_config: observability/prometheus/prometheus.yml
+```
+
+
+# Usage (local)
+
+## Requirements
 - Docker
 
-# Installation
+## Installation
 1. Clone this repository
 2. Run `docker-compose up`
 
-# Getting Started
+## Getting Started
 
 1. Copy `.env.example` to `.env`
 2. Run `docker-compose up`
@@ -41,10 +91,10 @@ Simple node pixel tracker app with deployment wrapped in a GitHub Action.
 6. View stats at `http://localhost:3000`
     - Log in with the Grafana username and password you set in your environment variables.
 
-# Environment
+## Environment
 `.env` file is used to set environment variables.
 
-## api-secret
+### api-secret
 A simple secret used to authenticate requests to the API.
 
 In your environmet variables, set:
@@ -57,7 +107,7 @@ Then, when you request any endpoint except the pixel itself (and the `/metrics` 
 
 
 
-# Endpoints
+## Endpoints
 
 | Endpoint | Description |
 | --- | --- |
@@ -71,48 +121,48 @@ Then, when you request any endpoint except the pixel itself (and the `/metrics` 
 
 
 
-## /
+### /
 
 Returns 200 OK. Use as health check.
 
-### Parameters
+#### Parameters
 `N/A`
 
-### Response Code
+#### Response Code
 `200 OK`
 
-### Response Body
+#### Response Body
 > Pixel Tracker App (Version ...)
 
 
-## /pixel/:id
+### /pixel/:id
 
 Returns 200 OK and 1x1 pixel. Also logs the request.
 
-### Parameters
+#### Parameters
 
 | Name | Type | Description |
 | --- | --- | --- |
 | `id` | `string` | Tracker ID |
 
-### Response Codes
+#### Response Codes
 
-#### 200
+##### 200
 
 **Response Body**
 > 1x1 pixel
 
 
-## /stats
+### /stats
 
 Returns 200 OK and JSON object with all trackers and their stats.
 
-### Parameters
+#### Parameters
 `N/A`
 
-### Response Codes
+#### Response Codes
 
-#### 200
+##### 200
 
 **Response Body**
 ```json
@@ -122,28 +172,28 @@ Returns 200 OK and JSON object with all trackers and their stats.
 }
 ```
 
-### Usage
+#### Usage
 
-#### Bash
+##### Bash
 ```bash
 API_SECRET=foo
 curl -X GET http://localhost:8000/stats?api-secret=$API_SECRET
 ```
 
 
-## /stats/:id
+### /stats/:id
 
 Returns 200 OK and JSON object with stats for specific tracker.
 
-### Parameters
+#### Parameters
 
 | Name | Type | Description |
 | --- | --- | --- |
 | `id` | `string` | Tracker ID |
 
-### Response Codes
+#### Response Codes
 
-#### 200
+##### 200
 
 **Response Body**
 ```json
@@ -154,7 +204,7 @@ Returns 200 OK and JSON object with stats for specific tracker.
 }
 ```
 
-#### 404
+##### 404
 
 **Response Body**
 ```json
@@ -164,25 +214,25 @@ Returns 200 OK and JSON object with stats for specific tracker.
 }
 ```
 
-### Usage
+#### Usage
 
-#### Bash
+##### Bash
 ```bash
 TRACKER_ID=1234567890
 API_SECRET=foo
 curl -X GET http://localhost:8000/stats/$TRACKER_ID?api-secret=$API_SECRET
 ```
 
-## /new-tracker
+### /new-tracker
 
 Creates new tracker and returns 200 OK and JSON object with new tracker id.
 
-### Parameters
+#### Parameters
 `N/A`
 
-### Response Codes
+#### Response Codes
 
-#### 200
+##### 200
 
 **Response Body**
 ```json
@@ -191,10 +241,10 @@ Creates new tracker and returns 200 OK and JSON object with new tracker id.
 }
 ```
 
-### Usage
+#### Usage
 
 
-#### Bash
+##### Bash
 > **Note:** be sure to set the contet type to Content-Type: application/json
 ```bash
 API_SECRET=your_secret
@@ -204,19 +254,19 @@ curl -X POST -d "$CURL_BODY" -H "Content-Type: application/json" http://localhos
 
 
 
-## /delete-tracker
+### /delete-tracker
 
 Deletes tracker and returns 200 OK and JSON object with deleted tracker id.
 
-### Parameters
+#### Parameters
 
 | Name | Type | Description |
 | --- | --- | --- |
 | `id` | `string` | Tracker ID |
 
-### Response Codes
+#### Response Codes
 
-#### 200
+##### 200
 
 **Response Body**
 ```json
@@ -225,7 +275,7 @@ Deletes tracker and returns 200 OK and JSON object with deleted tracker id.
 }
 ```
 
-#### 404
+##### 404
 
 **Response Body**
 ```json
@@ -235,18 +285,12 @@ Deletes tracker and returns 200 OK and JSON object with deleted tracker id.
 }
 ```
 
-### Usage
+#### Usage
 
-#### Bash
+##### Bash
 ```bash
 TRACKER_ID=1234567890
 API_SECRET=foo
 CURL_BODY="{\"api-secret\": \"$API_SECRET\"}"
 curl -X POST -d "$CURL_BODY" -H "Content-Type: application/json" http://localhost:8000/delete-tracker/$TRACKER_ID
 ```
-
-
-# Deployment
-TODO
-
-

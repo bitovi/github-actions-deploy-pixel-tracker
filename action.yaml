@@ -201,7 +201,7 @@ runs:
         aws_ec2_create_keypair_sm: ${{ inputs.aws_ec2_create_keypair_sm }}
         aws_ec2_instance_root_vol_size: ${{ inputs.aws_ec2_instance_vol_size }}
         aws_ec2_additional_tags: ${{ inputs.aws_ec2_additional_tags }}
-        aws_ec2_port_list: [8000,3000]
+        aws_ec2_port_list: 8000,3000
         aws_elb_app_port: 8000
         
         # AWS ELB

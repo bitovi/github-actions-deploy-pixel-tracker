@@ -195,10 +195,6 @@ runs:
         ansible_skip : ${{ inputs.infrastructure_only }}
         env_ghs: ${{ inputs.env_ghs }}
 
-        # pixel tracker configuration
-        grafana_datasource_dir: ${{ inputs.grafana_datasource_dir }}
-        prometheus_config: ${{ inputs.prometheus_config }}
-
         # AWS
         aws_access_key_id: ${{ inputs.aws_access_key_id }}
         aws_secret_access_key: ${{ inputs.aws_secret_access_key }}

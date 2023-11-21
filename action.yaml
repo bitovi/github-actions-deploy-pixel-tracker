@@ -214,9 +214,6 @@ runs:
         aws_resource_identifier: ${{ inputs.aws_resource_identifier }}
         aws_additional_tags: ${{ inputs.aws_extra_tags }}
 
-        # Ansible
-        gh_deployment_input_ansible: operations/deployment/ansible
-
         # Docker
         docker_install: true
         docker_cloudwatch_enable: true

@@ -214,6 +214,9 @@ runs:
         aws_resource_identifier: ${{ inputs.aws_resource_identifier }}
         aws_additional_tags: ${{ inputs.aws_extra_tags }}
 
+        # Ansible
+        gh_deployment_input_ansible: operations/deployment/ansible
+
         # Docker
         docker_install: true
         docker_cloudwatch_enable: true
@@ -222,7 +225,7 @@ runs:
 
         # EC2
         aws_ec2_instance_create: true
-        aws_ec2_ami_filter: 'ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*'
+        aws_ec2_ami_filter: 'ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-serv er-*'
         aws_ec2_iam_instance_profile: ${{ inputs.aws_ec2_instance_profile }}
         aws_ec2_instance_type: ${{ inputs.aws_ec2_instance_type }}
         aws_ec2_instance_public_ip: true
@@ -233,7 +236,7 @@ runs:
         
         # AWS ELB
         aws_elb_create: true
-        aws_elb_app_port: "8000"
+        aws_elb_app_port: "8000,3000"
         aws_elb_app_protocol: tcp
         aws_elb_healthcheck: "HTTP:8000/"
 

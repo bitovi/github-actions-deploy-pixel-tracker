@@ -35,7 +35,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./observability/prometheus:/etc/prometheus
-      - ./data/prom_data:/prometheus
+      - ./data/prom_data:/prometheus/data
   grafana:
     image: grafana/grafana
     container_name: grafana

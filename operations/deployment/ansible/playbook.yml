@@ -1,3 +1,3 @@
 - hosts: bitops_servers
   roles:
-    - install
+    - set_prometheus_file_permissions

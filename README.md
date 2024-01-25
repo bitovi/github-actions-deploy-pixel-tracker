@@ -80,6 +80,8 @@ jobs:
         aws_default_region: us-east-1
         grafana_datasource_dir: observability/grafana/datasources
         prometheus_config: observability/prometheus/prometheus.yml
+        prometheus_scrape_interval: 60m
+        prometheus_retention_period: 365d
 ```
 
 

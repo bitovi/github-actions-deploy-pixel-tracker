@@ -197,10 +197,6 @@ runs:
 
     - name: Set data retention and scrape interval
       shell: bash
-      env:
-        GITHUB_ACTION_PATH: ${{ github.action_path }}
-        SCRAPE_INTERVAL: ${{ inputs.prometheus_scrape_interval }}
-        RETENTION_PERIOD: ${{ inputs.prometheus_retention_period }}
       run: |
         echo "Setting retention days and scrape_interval"
         yq eval -i '.global.scrape_interval = "${{ inputs.prometheus_scrape_interval }}"'  "${{ github.action_path }}/observability/prometheus/prometheus.yml"
@@ -255,7 +251,7 @@ runs:
         # Docker
         docker_install: true
         docker_cloudwatch_enable: true
-        docker_cloudwatch_skip_destroy: true
+        docker_cloudwatch_skip_destroy: false
         docker_repo_app_directory: pixel-tracker-app
 
         # EC2

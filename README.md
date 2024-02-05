@@ -82,6 +82,7 @@ jobs:
         prometheus_config: observability/prometheus/prometheus.yml
         prometheus_scrape_interval: 60m
         prometheus_retention_period: 365d
+        grafana_scrape_interval: 60m
 ```
 
 

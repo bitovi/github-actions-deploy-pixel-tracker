@@ -331,7 +331,7 @@ runs:
       shell: bash
       env:
         GITHUB_ACTION_PATH: ${{ github.action_path }}
-        APP_SUBDIR: gha-prometheus-deployment
+        APP_SUBDIR: pixel-tracker-app
       run: |
         app_path=$GITHUB_WORKSPACE/$APP_SUBDIR
 
@@ -344,7 +344,6 @@ runs:
 
         echo "Debugging - ls -la $app_path"
         ls -la $app_path
-
 
     - name: Deploy with BitOps
       id: deploy

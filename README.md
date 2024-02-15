@@ -78,11 +78,11 @@ jobs:
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY_SANDBOX}}
         aws_ec2_instance_type: t2.small
         aws_default_region: us-east-1
-        grafana_datasource_dir: observability/grafana/datasources
-        prometheus_config: observability/prometheus/prometheus.yml
+        grafana_datasource_dir: observability/grafana/datasources    # If different 
+        prometheus_config: observability/prometheus/prometheus.yml.  # 
+        grafana_scrape_interval: 60m
         prometheus_scrape_interval: 60m
         prometheus_retention_period: 365d
-        grafana_scrape_interval: 60m
 ```
 
 
